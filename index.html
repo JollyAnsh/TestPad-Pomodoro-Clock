@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POMODORO CLOCK</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        #timer {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff6f61;
+            background-color: #fff;
+            padding: 20px;
+            border: 3px solid #ff6f61;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: #ff6f61;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff4a36;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        button#pause {
+            background-color: #4a90e2;
+        }
+
+        button#pause:hover {
+            background-color: #357abd;
+        }
+
+        button#reset {
+            background-color: #50e3c2;
+        }
+
+        button#reset:hover {
+            background-color: #32d2a0;
+        }
+    </style>
+</head>
+<body>
+    <div id="timer">
+        <span id="minute">30</span>
+        <span id="seperator">:</span>
+        <span id="second">00</span>
+
+    </div>
+    <button id="start">START</button>
+    <!-- <button id="end">END</button> -->
+    <button id="pause">PAUSE</button>
+    <button id="reset">RESET</button>
+    <script>
+        let start=document.getElementById("start");
+        let pause=document.getElementById("pause");
+        let reset=document.getElementById("reset");
+        let time_left=document.getElementById("time-left");
+
+        let minuteDisplay = document.getElementById("minute");
+        let secondDisplay = document.getElementById("second");
+        let isRunning=false;
+        let INTERVAL;
+        let seconds=0;
+        let minutes=30;
+        function update_time(){
+            if(seconds===0){
+                if( minutes===0){
+                clearInterval(INTERVAL);
+                isRunning=false;
+                alert("Time's up!");
+            }}
+            if (seconds == 0) {
+                minutes--;    
+                seconds = 59; 
+            } else {
+                seconds--;
+            }
+            minuteDisplay.innerHTML = minutes < 10 ? "0" + minutes : minutes;
+            secondDisplay.innerHTML = seconds < 10 ? "0" + seconds : seconds;
+            time_left.textContent = `${minutes_display}:${seconds_display}`;
+        }
+        start.addEventListener('click',()=>{
+            if(!isRunning){
+                isRunning=true;
+                INTERVAL=setInterval(update_time,1000);
+            }
+        })
+        pause.addEventListener('click',()=>{
+            if(isRunning){
+                clearInterval(INTERVAL);
+                isRunning=false;
+            }
+        })
+        reset.addEventListener('click',()=>{
+            
+                isRunning=false;
+                clearInterval(INTERVAL);
+                minutes=30;
+                seconds=0;
+                minuteDisplay.innerHTML='30';
+                secondDisplay.innerHTML='00';
+            
+        })
+
+    </script>
+</body>
+</html>
